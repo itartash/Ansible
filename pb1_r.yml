@@ -1,0 +1,30 @@
+---
+- name: Install Docker
+  hosts: all
+  become: yes
+  become_user: root
+ 
+  tasks:
+    - name: Group creation
+      group:
+        name: docker
+
+    - name: User creation
+      user:
+        group: docker
+        name: psapp
+         
+
+    - name: Add Docker repository
+      command: curl  https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
+      args:
+        warn: false
+
+    - name: Library
+      pip:
+        name: docker
+
+    - name: Install Docker
+      command: sudo dnf -y  install docker-ce --nobest
+
+    

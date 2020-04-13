@@ -1,0 +1,22 @@
+---
+- name: RabbitMQ
+  hosts: all
+  become: yes
+  become_user: psapp
+
+  tasks:
+    - name: Pull image
+      docker_image:
+        name: rabbitmq
+        tag: latest
+        state: present
+
+    - name: Create container
+      docker_container:
+        name: rabbit_cont
+        image: rabbitmq
+        state: started
+
+    - name: Volume
+      docker_volume:
+        name: rabbitmq_data         
